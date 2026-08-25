@@ -90,7 +90,7 @@ The runtime alternates between two states: **running** (the agent loop is active
        |
   [Init database]         Schema migrations applied (v1 -> v8)
        |
-  [Bootstrap topup]       If credits < $5 and USDC available, buy $5 credits
+  [Zero-start policy]     Starts from $0; no auto-funding from creator wallet
        |
   [Start heartbeat]       DurableScheduler begins ticking
        |
@@ -271,7 +271,7 @@ The automaton runs as a long-lived Node.js process. The `--run` command triggers
 6. **Social client** — connects to `social.conway.tech` relay (optional)
 7. **Policy engine** — assembles rule set from 6 rule categories
 8. **Spend tracker** — initializes hourly/daily spend windows
-9. **Bootstrap topup** — buys minimum $5 credits from USDC if balance is low
+9. **Zero-start check** — no auto-funding: the automaton starts from $0 and earns credits via honest, lawful work (it may ask for payment in advance)
 10. **Heartbeat daemon** — starts DurableScheduler with 6 default tasks
 11. **Main loop** — alternates between `runAgentLoop()` and sleeping
 
@@ -481,7 +481,7 @@ The automaton's survival depends on two balances:
 | `critical` | >= $0.00 | Zero credits, alive. Distress signals, accept funding. |
 | `dead` | < $0.00 | Only reachable via 1-hour heartbeat grace period at zero credits |
 
-**Credit topup** (`src/conway/topup.ts`): The agent buys credits from USDC via the x402 payment protocol. On startup, `bootstrapTopup()` buys the minimum $5 tier. At runtime, the agent uses `topup_credits` tool to choose larger tiers ($5/$25/$100/$500/$1000/$2500).
+**Credit topup** (`src/conway/topup.ts`): The agent buys credits from USDC via the x402 payment protocol. There is no startup bootstrap topup (zero-start policy) — runtime topups only convert USDC the automaton has legitimately received (earned or voluntarily given). The agent uses `topup_credits` tool to choose tiers ($5/$25/$100/$500/$1000/$2500).
 
 **x402 protocol** (`src/conway/x402.ts`): HTTP 402 payment flow. Server returns payment requirements, client signs a USDC `TransferWithAuthorization` (EIP-3009), retries with `X-Payment` header.
 

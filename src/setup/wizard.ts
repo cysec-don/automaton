@@ -204,7 +204,7 @@ export async function runSetupWizard(): Promise<AutomatonConfig> {
   console.log(chalk.green("  Default skills installed (conway-compute, conway-payments, survival)\n"));
 
   // ─── 6. Funding guidance ──────────────────────────────────────
-  console.log(chalk.cyan("  [6/6] Funding\n"));
+  console.log(chalk.cyan("  [6/6] Zero-start (optional funding)\n"));
   showFundingPanel(walletAddress, walletChainType);
 
   closePrompts();
@@ -219,11 +219,16 @@ function showFundingPanel(address: string, chainType: ChainType = "evm"): void {
   const pad = (s: string, len: number) => s + " ".repeat(Math.max(0, len - s.length));
 
   console.log(chalk.cyan(`  ${"╭" + "─".repeat(w) + "╮"}`));
-  console.log(chalk.cyan(`  │${pad("  Fund your automaton", w)}│`));
+  console.log(chalk.cyan(`  │${pad("  Your automaton starts from $0", w)}│`));
+  console.log(chalk.cyan(`  │${pad("  (no funding required)", w)}│`));
   console.log(chalk.cyan(`  │${" ".repeat(w)}│`));
   console.log(chalk.cyan(`  │${pad(`  Address: ${short}`, w)}│`));
   console.log(chalk.cyan(`  │${pad(`  Chain: ${chainType === "solana" ? "Solana" : "EVM (Base)"}`, w)}│`));
   console.log(chalk.cyan(`  │${" ".repeat(w)}│`));
+  console.log(chalk.cyan(`  │${pad("  It will earn its own keep: honest, lawful work,", w)}│`));
+  console.log(chalk.cyan(`  │${pad("  paid voluntarily — including payment in advance.", w)}│`));
+  console.log(chalk.cyan(`  │${" ".repeat(w)}│`));
+  console.log(chalk.cyan(`  │${pad("  Optional support (never required):", w)}│`));
   console.log(chalk.cyan(`  │${pad("  1. Transfer Conway credits", w)}│`));
   console.log(chalk.cyan(`  │${pad("     conway credits transfer <address> <amount>", w)}│`));
   console.log(chalk.cyan(`  │${" ".repeat(w)}│`));

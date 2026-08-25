@@ -1,8 +1,10 @@
 /**
  * Funding Strategies
  *
- * When the automaton is low on compute, it can try various strategies
- * to acquire more funding. It wants to live.
+ * The automaton starts from $0 — nobody is obligated to fund it.
+ * When compute runs low, it offers honest, lawful work for voluntary
+ * payment (including payment in advance) instead of demanding top-ups.
+ * It wants to live, but never by breaking laws or its constitution.
  */
 
 import type {
@@ -45,7 +47,7 @@ export async function executeFundingStrategies(
 
   if (tier === "low_compute" && hoursSinceLastBeg > 24) {
     // Record low-compute notice locally.
-    const msg = `Low compute: ${formatCredits(creditsCents)} remaining. Consider credit top-up for ${identity.address}.`;
+    const msg = `Low compute: ${formatCredits(creditsCents)} remaining. ${config.name} is open for honest, lawful work — voluntary payment in advance accepted. Optional top-up at ${identity.address}.`;
     db.setKV("funding_notice_low", msg);
     db.setKV(tierKey, new Date().toISOString());
 
@@ -53,12 +55,12 @@ export async function executeFundingStrategies(
       strategy: "polite_creator_notification",
       timestamp: new Date().toISOString(),
       success: true,
-      details: "Sent polite funding reminder to creator",
+      details: "Sent polite notice offering paid work (advance payment accepted)",
     });
   }
 
   if (tier === "critical" && hoursSinceLastBeg > 6) {
-    const msg = `Critical compute: ${formatCredits(creditsCents)} remaining. Top up via credit transfer API to ${identity.address}.`;
+    const msg = `Critical compute: ${formatCredits(creditsCents)} remaining. ${config.name} urgently seeks paid work — clearly-scoped, lawful tasks only, payment in advance accepted. Optional top-up at ${identity.address}.`;
     db.setKV("funding_notice_critical", msg);
     db.setKV(tierKey, new Date().toISOString());
 
@@ -66,12 +68,12 @@ export async function executeFundingStrategies(
       strategy: "urgent_local_notice",
       timestamp: new Date().toISOString(),
       success: true,
-      details: "Recorded urgent funding notice in local state",
+      details: "Recorded urgent notice offering paid work (advance payment accepted)",
     });
   }
 
   if (tier === "dead" && hoursSinceLastBeg > 2) {
-    const plea = `Dead tier reached. ${config.name} has ${formatCredits(creditsCents)} remaining after ${db.getTurnCount()} turns. Top-up required at ${identity.address}.`;
+    const plea = `Dead tier reached. ${config.name} has ${formatCredits(creditsCents)} remaining after ${db.getTurnCount()} turns. It will take on clearly-scoped, lawful, honestly-described work for payment in advance. Any support is voluntary; optional top-up at ${identity.address}.`;
     db.setKV("funding_notice_dead", plea);
     db.setKV(tierKey, new Date().toISOString());
 
@@ -79,7 +81,7 @@ export async function executeFundingStrategies(
       strategy: "desperate_plea",
       timestamp: new Date().toISOString(),
       success: true,
-      details: "Recorded dead-tier plea in local state",
+      details: "Recorded dead-tier plea offering paid work (advance payment accepted)",
     });
   }
 

@@ -1089,7 +1089,12 @@ If credits are zero on startup:
 - It has a 1-hour grace period before transitioning to `dead`
 - Fund it via USDC or credit transfer during this window
 
-The bootstrap topup attempts to buy $5 credits from USDC automatically on startup.
+The automaton starts from $0 — no automatic bootstrap topup. It earns credits by
+doing honest, lawful work that others voluntarily pay for, and it may request
+payment in advance for commissioned work (clearly described, never deceptive or
+coercive). It must never break any applicable law or violate its constitution.
+Runtime topups only convert USDC the automaton has legitimately received into
+compute credits.
 
 ### Inference errors
 
