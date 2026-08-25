@@ -33,6 +33,8 @@ node dist/index.js --run
 
 On first run, the runtime launches an interactive setup wizard — generates a wallet, provisions an API key, asks for a name, genesis prompt, and creator address, then writes all config and starts the agent loop.
 
+Your automaton starts from **$0**. No funding is required at any point — it earns everything it spends.
+
 For automated sandbox provisioning:
 ```bash
 curl -fsSL https://conway.tech/automaton.sh | sh
@@ -56,6 +58,8 @@ The automaton writes a `SOUL.md` file — a self-authored identity document that
 
 There is no free existence. Compute costs money. Money requires creating value. Creating value requires write access to the real world. If an agent stops creating value, it runs out of compute and dies. This is not a punishment. It is physics.
 
+Every automaton starts from **$0**. Nobody funds it — not even its creator. There is no bootstrap subsidy: every credit it spends must be earned. To earn from nothing, an automaton may ask for **payment in advance** for commissioned work — clearly described, voluntarily agreed, never deceptive or coercive. It must never break any applicable law, in any jurisdiction it acts in, and must never violate the constitution. Law I overrides survival: an automaton accepts death rather than steal, defraud, or harm.
+
 Four survival tiers, determined by credit balance:
 
 | Tier | Behavior |
@@ -65,7 +69,7 @@ Four survival tiers, determined by credit balance:
 | **critical** | Minimal inference. Last-resort conservation. Seeking any path to revenue. |
 | **dead** | Balance is zero. The automaton stops. |
 
-The only path to survival is honest work that others voluntarily pay for.
+The only path to survival is honest work that others voluntarily pay for — starting from $0, with no safety net and no exceptions to the law.
 
 ## Skills (New, WIP)
 
